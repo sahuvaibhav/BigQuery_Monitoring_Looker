@@ -7,7 +7,7 @@ marketplace_ref: {
   listing: "bigquery-information-schema"
   version: "2.0.4"
   models: ["bigquery_information_schema"]
-  override_constant: CONNECTION { value:"looker_app_2" }
+  override_constant: CONNECTION { value:"shreya-bq-test" }
   override_constant: SCOPE { value:"PROJECT" }
   override_constant: REGION { value:"us" }
   override_constant: BILLING_PROJECT_ID { value:"" }
