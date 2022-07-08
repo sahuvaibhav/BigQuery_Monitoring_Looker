@@ -8,7 +8,7 @@
 
   elements:
     - name: add_a_unique_name_1657260112
-      title: Untitled Visualization
+      title: Processed Bytes and Estimated Cost
       model: bigquery_information_schema
       explore: jobs
       type: looker_area
@@ -65,7 +65,7 @@
       show_null_labels: false
 
     - name: add_a_unique_name_1657261726
-      title: Untitled Visualization
+      title: Processed Bytes and Billed Bytes
       model: bigquery_information_schema
       explore: jobs
       type: looker_area
