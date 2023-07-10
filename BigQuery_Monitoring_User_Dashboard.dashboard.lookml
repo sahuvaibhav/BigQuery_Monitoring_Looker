@@ -8,7 +8,7 @@
   elements:
   - title: Average Slot Usage by Users
     name: Average Slot Usage by Users
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_area
     fields: [jobs.user_email, jobs.average_slot_ms, date.__date]
@@ -65,7 +65,7 @@
     height: 7
   - title: Processed GiB By User
     name: Processed GiB By User
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.user_email, date.__date, jobs.total_processed_gib]
@@ -130,7 +130,7 @@
     height: 8
   - title: Total Billed GiB by User
     name: Total Billed GiB by User
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_area
     fields: [jobs.user_email, date.__date, jobs.total_gbytes_billed]
@@ -191,7 +191,7 @@
     height: 7
   - title: New Tile
     name: New Tile
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.average_slot_ms]
@@ -256,7 +256,7 @@
     height: 3
   - title: New Tile
     name: New Tile (2)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_processed_gib]
@@ -320,7 +320,7 @@
     height: 3
   - title: New Tile
     name: New Tile (3)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_gbytes_billed]
@@ -385,7 +385,7 @@
     height: 3
   - title: Number of Job by User
     name: Number of Job by User
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.user_email, date.__date, jobs.query_count]
@@ -461,7 +461,7 @@
     height: 8
   - title: New Tile
     name: New Tile (4)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
@@ -532,7 +532,7 @@
     height: 3
   - title: New Tile
     name: New Tile (5)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.state, jobs.count]
@@ -590,7 +590,7 @@
     height: 3
   - title: Average Slot Usage by Users per Hour
     name: Average Slot Usage by Users per Hour
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.user_email, jobs.average_slot_ms, date.__date, date.__hour]
@@ -656,7 +656,7 @@
       type: advanced
       display: popover
       options: []
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: date.date_filter
@@ -670,7 +670,7 @@
       type: advanced
       display: popover
       options: []
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: jobs.user_email

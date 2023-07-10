@@ -2,6 +2,7 @@ include: "//bigquery-information-schema/**/*.view.lkml"
 include: "//bigquery-information-schema/**/*.explore.lkml"
 
 include: "Bq_cost_sample.dashboard"
+include: "/**/*.dashboard"
 # #
 # Use LookML refinements to refine views and explores defined in the remote project.
 # Learn more at: https://docs.looker.com/data-modeling/learning-lookml/refinements

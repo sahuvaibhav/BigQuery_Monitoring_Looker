@@ -1,5 +1,5 @@
-- dashboard: bigquery_monitoring
-  title: BigQuery Monitoring
+- dashboard: bigquery_monitoring_Admin
+  title: BigQuery Monitoring Admin
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
@@ -7,7 +7,7 @@
   elements:
   - title: BigQuery Monitoring
     name: BigQuery Monitoring
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_slot_ms]
@@ -39,7 +39,7 @@
     height: 2
   - title: New Tile
     name: New Tile
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_processed_gib]
@@ -70,7 +70,7 @@
     height: 2
   - title: New Tile
     name: New Tile (2)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_gbytes_billed]
@@ -101,7 +101,7 @@
     height: 2
   - title: New Tile
     name: New Tile (3)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_runtime]
@@ -132,7 +132,7 @@
     height: 2
   - title: New Tile
     name: New Tile (4)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.total_spill_to_disk_gib]
@@ -163,7 +163,7 @@
     height: 2
   - title: New Tile
     name: New Tile (5)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
@@ -194,7 +194,7 @@
     height: 2
   - title: New Tile
     name: New Tile (6)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_cache_rate]
@@ -225,7 +225,7 @@
     height: 2
   - title: New Tile
     name: New Tile (7)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
@@ -288,7 +288,7 @@
     height: 2
   - title: New Tile
     name: New Tile (8)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
@@ -351,7 +351,7 @@
     height: 2
   - title: New Tile
     name: New Tile (9)
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
@@ -414,7 +414,7 @@
     height: 2
   - title: Data Processed by Date
     name: Data Processed by Date
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.creation_date, jobs.total_processed_gib, jobs.total_gbytes_billed]
@@ -483,7 +483,7 @@
     height: 7
   - title: Slot Usage per Day
     name: Slot Usage per Day
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.creation_date, jobs.total_slot_ms]
@@ -562,7 +562,7 @@
     height: 7
   - title: Average Query Duration per Hour
     name: Average Query Duration per Hour
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_area
     fields: [jobs.creation_hour, jobs.total_slot_ms, jobs.query_count, jobs.total_duration]
@@ -682,7 +682,7 @@
     height: 6
   - title: Total Slot Usage per Hour
     name: Total Slot Usage per Hour
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_area
     fields: [jobs.creation_hour, jobs.total_slot_ms, jobs.query_count, jobs.total_duration]
@@ -793,7 +793,7 @@
     height: 6
   - title: GB Processed per Hour
     name: GB Processed per Hour
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_area
     fields: [jobs.creation_hour, jobs.total_slot_ms, jobs.query_count, jobs.total_duration,
@@ -908,7 +908,7 @@
     height: 7
   - title: Concurrent Queries
     name: Concurrent Queries
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_line
     fields: [jobs.creation_hour, jobs.total_slot_ms, jobs.query_count, jobs.total_duration,
@@ -1021,7 +1021,7 @@
     height: 6
   - title: Query Count by Priority and State
     name: Query Count by Priority and State
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.priority, jobs.query_count, jobs.state]
@@ -1080,7 +1080,7 @@
     height: 6
   - title: Data processed per day across projects
     name: Data processed per day across projects
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_grid
     fields: [jobs.creation_date, jobs.project_id, jobs.total_processed_gib]
@@ -1150,7 +1150,7 @@
     height: 7
   - title: Average Duration By Query State
     name: Average Duration By Query State
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.state, jobs.average_duration, jobs.average_runtime]
@@ -1216,7 +1216,7 @@
     height: 7
   - title: Failed Queries
     name: Failed Queries
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_grid
     fields: [jobs.query_count, jobs.user_email, jobs.average_duration, jobs.average_runtime,
@@ -1290,7 +1290,7 @@
     height: 6
   - title: Data Transfer Jobs
     name: Data Transfer Jobs
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_column
     fields: [jobs.user_email, jobs.total_slot_ms, jobs.total_processed_gib]
@@ -1352,7 +1352,7 @@
     height: 6
   - title: Average Slots Hourly Usage
     name: Average Slots Hourly Usage
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     type: looker_grid
     fields: [jobs.creation_hour_of_day, jobs.creation_date, jobs.average_slot_ms]
@@ -1429,14 +1429,14 @@
     height: 13
   - type: button
     name: button_1800
-    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/386?Date%20Limit=8%20days&User%20Email="}'
+    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_user_dashboard?Date%20Limit=8%20days&User%20Email="}'
     row: 0
     col: 0
     width: 11
     height: 1
   - type: button
     name: button_1802
-    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/388?Date+Limit=8+days&%5BJob+ID%5D=&Job+Type="}'
+    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_jobs_dashboard?Date%20Limit=8%20days&%5BJob%20ID%5D=&Job%20Type="}'
     row: 0
     col: 12
     width: 12
@@ -1654,7 +1654,7 @@
       type: advanced
       display: popover
       options: []
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: date.date_filter
@@ -1667,7 +1667,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: tables.table_catalog
@@ -1680,7 +1680,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: jobs.job_type
@@ -1694,7 +1694,7 @@
       type: advanced
       display: popover
       options: []
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: jobs.creation_time
@@ -1707,7 +1707,7 @@
     ui_config:
       type: button_group
       display: inline
-    model: tc_sample_bq_dashboard
+    model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: jobs.state
