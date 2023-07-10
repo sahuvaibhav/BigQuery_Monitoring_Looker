@@ -1,6 +1,6 @@
 ###################################################################################
 # This is a read-only file! Its contents can be edited through the Marketplace UI #
-# See the docs at: https://docs.looker.com/data-modeling/marketplace              #
+# See the docs at: https://cloud.google.com/looker/docs/data-modeling/marketplace              #
 ###################################################################################
 
 marketplace_ref: {
