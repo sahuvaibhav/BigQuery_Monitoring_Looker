@@ -1,4 +1,4 @@
-- dashboard: bigquery_monitoring_Admin
+- dashboard: bigquery_monitoring_admin
   title: BigQuery Monitoring Admin
   layout: newspaper
   preferred_viewer: dashboards-next
@@ -1436,14 +1436,14 @@
     height: 13
   - type: button
     name: button_1800
-    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/386?Date%20Limit=8%20days&User%20Email="}'
+    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_user_dashboard?Date%20Limit=8%20days&User%20Email="}'
     row: 0
     col: 0
     width: 11
     height: 1
   - type: button
     name: button_1802
-    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/388?Date+Limit=8+days&%5BJob+ID%5D=&Job+Type="}'
+    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_jobs_dashboard?Date%20Limit=8%20days&%5BJob%20ID%5D=&Job%20Type="}'
     row: 0
     col: 12
     width: 12

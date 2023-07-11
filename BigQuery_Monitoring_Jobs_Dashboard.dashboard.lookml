@@ -1,24 +1,37 @@
-- dashboard: bigquery_monitoring_user_dashboard
-  title: BigQuery Monitoring [User Dashboard]
+- dashboard: bigquery_monitoring_jobs_dashboard
+  title: BigQuery Monitoring [Jobs Dashboard]
   layout: newspaper
   preferred_viewer: dashboards-next
-  crossfilter_enabled: true
   description: ''
-  preferred_slug: rMvxugAGhNCXwTWU3QT1jr
+  preferred_slug: tVmnvoZzwjShGHE9w4iJoi
   elements:
-  - title: Average Slot Usage by Users
-    name: Average Slot Usage by Users
+  - title: Total Job seconds
+    name: Total Job seconds
     model: bigquery_information_schema
-    explore: jobs
-    type: looker_area
-    fields: [jobs.user_email, jobs.average_slot_ms, date.__date]
-    pivots: [jobs.user_email]
-    fill_fields: [date.__date]
-    filters: {}
-    sorts: [jobs.user_email, jobs.average_slot_ms desc 0]
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.job_seconds]
+    filters:
+      jobs_timeline.state: ''
     limit: 500
     column_limit: 50
-    x_axis_gridlines: true
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Job seconds
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -31,55 +44,79 @@
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
     trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
     legend_position: center
     point_style: none
-    show_value_labels: true
+    series_colors: {}
+    show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
+    ordering: none
+    show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    x_axis_zoom: true
-    y_axis_zoom: true
     hidden_pivots: {}
-    ordering: none
-    show_null_labels: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Filter on a User Email for better Visuals
+    note_text: Number of jobs running x number of seconds from creation to end. (Max
+      granularity is 1 job second). Useful for understanding job density for non slot-consuming
+      jobs, e.g. pending jobs
     listen:
       Date Limit: date.date_filter
-      User Email: jobs.user_email
-    row: 14
+      "[Job ID]": jobs_timeline_job.job_id
+      Job Type: jobs_timeline_job.job_type
+    row: 0
     col: 0
-    width: 13
-    height: 7
-  - title: Processed GiB By User
-    name: Processed GiB By User
+    width: 6
+    height: 3
+  - title: Total Job seconds pending
+    name: Total Job seconds pending
     model: bigquery_information_schema
-    explore: jobs
-    type: looker_column
-    fields: [jobs.user_email, date.__date, jobs.total_processed_gib]
-    pivots: [jobs.user_email]
-    fill_fields: [date.__date]
-    filters:
-      date.date_filter: 8 days
-    sorts: [jobs.user_email, date.__date desc]
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.job_seconds_pending]
+    filters: {}
+    sorts: [jobs_timeline.job_seconds_pending desc 0]
     limit: 500
     column_limit: 50
-    x_axis_gridlines: true
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Job seconds pending
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -92,11 +129,18 @@
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
     trellis: ''
     stacking: normal
-    limit_displayed_rows: false
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
     legend_position: center
     point_style: none
+    series_colors: {}
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto
@@ -106,48 +150,363 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    note_state: expanded
+    note_display: hover
+    note_text: Number of jobs running x number of seconds that they were pending,
+      from creation to start. (Max granularity is 1 job second). Useful for understanding
+      job density for non slot-consuming jobs, e.g. pending jobs
+    listen:
+      Date Limit: date.date_filter
+      "[Job ID]": jobs_timeline_job.job_id
+      Job Type: jobs_timeline_job.job_type
+    row: 0
+    col: 6
+    width: 6
+    height: 3
+  - title: Total Job seconds running
+    name: Total Job seconds running
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.job_seconds_running]
+    filters:
+      jobs_timeline.state: ''
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     color_application:
-      collection_id: ed5756e2-1ba8-4233-97d2-d565e309c03b
-      palette_id: ff31218a-4f9d-493c-ade2-22266f5934b8
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
       options:
         steps: 5
-    y_axes: [{label: Processed GiB, orientation: left, series: [{axisId: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com
-              - jobs.total_processed_gib, id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com
-              - jobs.total_processed_gib, name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com},
-          {axisId: shreyashri@google.com - jobs.total_processed_gib, id: shreyashri@google.com
-              - jobs.total_processed_gib, name: shreyashri@google.com}], showLabels: true,
-        showValues: true, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
-        type: linear}]
+    single_value_title: Total Job seconds running
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
     x_axis_zoom: true
     y_axis_zoom: true
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    legend_position: center
+    point_style: none
     series_colors: {}
-    show_null_points: true
-    interpolation: linear
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
     hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Filter on a User Email for better Visuals
+    note_text: Number of jobs running x number of seconds that they were running,
+      from creation to start. (Max granularity is 1 job second). Useful for understanding
+      job density for non slot-consuming jobs, e.g. pending jobs
     listen:
-      User Email: jobs.user_email
-    row: 21
-    col: 0
-    width: 13
-    height: 8
-  - title: Total Billed GiB by User
-    name: Total Billed GiB by User
+      Date Limit: date.date_filter
+      "[Job ID]": jobs_timeline_job.job_id
+      Job Type: jobs_timeline_job.job_type
+    row: 0
+    col: 12
+    width: 6
+    height: 3
+  - title: New Tile
+    name: New Tile
     model: bigquery_information_schema
-    explore: jobs
-    type: looker_area
-    fields: [jobs.user_email, date.__date, jobs.total_gbytes_billed]
-    pivots: [jobs.user_email]
-    fill_fields: [date.__date]
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.count_jobs]
     filters:
-      date.date_filter: 8 days
-    sorts: [jobs.user_email, date.__date desc]
+      jobs_timeline.state: ''
     limit: 500
     column_limit: 50
-    x_axis_gridlines: true
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Number of Jobs run
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    legend_position: center
+    point_style: none
+    series_colors: {}
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    listen:
+      Date Limit: date.date_filter
+    row: 3
+    col: 0
+    width: 8
+    height: 3
+  - title: New Tile
+    name: New Tile (2)
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.pending_jobs]
+    filters:
+      jobs_timeline.state: ''
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Number of Jobs pending
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    legend_position: center
+    point_style: none
+    series_colors: {}
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    listen:
+      Date Limit: date.date_filter
+    row: 3
+    col: 8
+    width: 8
+    height: 3
+  - title: New Tile
+    name: New Tile (3)
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: single_value
+    fields: [jobs_timeline.running_jobs]
+    filters:
+      jobs_timeline.state: ''
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Number of Jobs running
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    legend_position: center
+    point_style: none
+    series_colors: {}
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    listen:
+      Date Limit: date.date_filter
+    row: 3
+    col: 16
+    width: 8
+    height: 3
+  - title: Jobs - Total Slots (ms) - Top 15
+    name: Jobs - Total Slots (ms) - Top 15
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.total_slot_ms]
+    filters:
+      jobs_timeline.state: ''
+    sorts: [jobs_timeline.total_slot_ms desc 0]
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -162,128 +521,72 @@
     plot_size_by_field: false
     trellis: ''
     stacking: ''
-    limit_displayed_rows: false
+    limit_displayed_rows: true
     legend_position: center
     point_style: none
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
+    ordering: none
+    show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    y_axes: [{label: Total GiB Billed, orientation: left, series: [{axisId: jobs.total_gbytes_billed,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.total_gbytes_billed,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}, {
-            axisId: jobs.total_gbytes_billed, id: shreyashri@google.com - jobs.total_gbytes_billed,
-            name: shreyashri@google.com}], showLabels: true, showValues: true, unpinAxis: false,
-        tickDensity: default, tickDensityCustom: 5, type: linear}]
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
     x_axis_zoom: true
     y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
     hidden_series: []
+    series_colors: {}
+    custom_color_enabled: true
+    show_single_value_title: true
+    single_value_title: Total Number of Jobs running
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     hidden_pivots: {}
-    ordering: none
-    show_null_labels: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     defaults_version: 1
-    value_labels: legend
-    label_type: labPer
-    note_state: collapsed
-    note_display: hover
-    note_text: Filter on a User Email for better Visuals
     listen:
-      User Email: jobs.user_email
+      Date Limit: date.date_filter
     row: 14
-    col: 13
-    width: 11
-    height: 7
-  - title: Total Slots (ms) Usage
-    name: Total Slots (ms) Usage
-    model: bigquery_information_schema
-    explore: jobs
-    type: single_value
-    fields: [jobs.average_slot_ms]
-    filters:
-      date.date_filter: 8 days
-    sorts: [jobs.average_slot_ms desc]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    single_value_title: Total Slots (ms) Usage
-    x_axis_gridlines: true
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: true
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    x_axis_zoom: true
-    y_axis_zoom: true
-    hidden_pivots: {}
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    listen:
-      User Email: jobs.user_email
-    row: 0
     col: 0
-    width: 5
-    height: 3
-  - title: Total Processed (GB)
-    name: Total Processed (GB)
+    width: 8
+    height: 9
+  - title: Job run time elapsed (seconds) - Top 15
+    name: Job run time elapsed (seconds) - Top 15
     model: bigquery_information_schema
-    explore: jobs
-    type: single_value
-    fields: [jobs.total_processed_gib]
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.elapsed_seconds]
     filters:
-      date.date_filter: 8 days
+      jobs_timeline.state: ''
+    sorts: [jobs_timeline.elapsed_seconds desc 0]
     limit: 500
     column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    single_value_title: Total Processed (GB)
-    x_axis_gridlines: true
+    query_timezone: America/New_York
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -298,45 +601,71 @@
     plot_size_by_field: false
     trellis: ''
     stacking: ''
-    limit_displayed_rows: false
+    limit_displayed_rows: true
     legend_position: center
     point_style: none
-    show_value_labels: true
+    show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    x_axis_zoom: true
-    y_axis_zoom: true
-    hidden_pivots: {}
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    hidden_series: []
+    series_colors:
+      jobs_timeline.elapsed_seconds: "#3EB0D5"
+    column_spacing_ratio: 0
+    custom_color_enabled: true
+    show_single_value_title: true
+    single_value_title: Total Number of Jobs running
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     defaults_version: 1
     listen:
-      User Email: jobs.user_email
-    row: 0
-    col: 5
-    width: 5
-    height: 3
-  - title: Total Billed (GB)
-    name: Total Billed (GB)
+      Date Limit: date.date_filter
+    row: 23
+    col: 0
+    width: 8
+    height: 10
+  - title: Slot usage (minutes)
+    name: Slot usage (minutes)
     model: bigquery_information_schema
-    explore: jobs
+    explore: jobs_timeline
     type: single_value
-    fields: [jobs.total_gbytes_billed]
-    filters:
-      date.date_filter: 8 days
+    fields: [jobs_timeline.total_slot_minutes]
+    filters: {}
     limit: 500
     column_limit: 50
+    query_timezone: America/New_York
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -346,9 +675,13 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Billed (GB)
-    value_format: "#.##"
-    x_axis_gridlines: true
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    single_value_title: Total Slot Usage (minutes)
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -361,51 +694,98 @@
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
     trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
+    stacking: normal
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
     legend_position: center
     point_style: none
-    show_value_labels: true
+    series_colors: {}
+    show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    x_axis_zoom: true
-    y_axis_zoom: true
-    hidden_pivots: {}
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     defaults_version: 1
     listen:
-      User Email: jobs.user_email
+      Date Limit: date.date_filter
+      "[Job ID]": jobs_timeline_job.job_id
+      Job Type: jobs_timeline_job.job_type
     row: 0
-    col: 10
-    width: 5
+    col: 18
+    width: 6
     height: 3
-  - title: Number of Job by User
-    name: Number of Job by User
+  - title: Job Info
+    name: Job Info
     model: bigquery_information_schema
     explore: jobs
-    type: looker_column
-    fields: [jobs.user_email, date.__date, jobs.query_count]
-    pivots: [jobs.user_email]
-    fill_fields: [date.__date]
+    type: looker_single_record
+    fields: [jobs.job_id, date.__minute, jobs.query_text, jobs.error_result, jobs.is_cache_hit,
+      jobs.user_email, jobs.total_delay_to_start_time, jobs.total_runtime, jobs.total_processed_gib,
+      jobs.total_slot_ms]
     filters:
-      date.date_filter: 8 days
-    sorts: [jobs.user_email, date.__date desc]
+      date.date_filter: 8 seconds
+    sorts: [date.__minute desc]
     limit: 500
     column_limit: 50
-    x_axis_gridlines: true
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    hidden_fields:
+    listen:
+      "[Job ID]": jobs.job_id
+    row: 6
+    col: 12
+    width: 12
+    height: 8
+  - title: Slots Usage by Jobs Completed (Top 15)
+    name: Slots Usage by Jobs Completed (Top 15)
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.total_slot_ms, jobs_timeline.state]
+    filters:
+      jobs_timeline_job.job_id: ''
+      jobs_timeline_job.job_type: ''
+      jobs_timeline.state: DONE
+    sorts: [jobs_timeline.total_slot_ms desc 0]
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     show_y_axis_labels: true
@@ -420,10 +800,10 @@
     plot_size_by_field: false
     trellis: ''
     stacking: normal
-    limit_displayed_rows: false
+    limit_displayed_rows: true
     legend_position: center
     point_style: none
-    show_value_labels: true
+    show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
@@ -433,78 +813,57 @@
     show_silhouette: false
     totals_color: "#808080"
     color_application:
-      collection_id: ed5756e2-1ba8-4233-97d2-d565e309c03b
-      palette_id: ff31218a-4f9d-493c-ade2-22266f5934b8
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
       options:
         steps: 5
-    y_axes: [{label: Number of Queries, orientation: left, series: [{axisId: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com
-              - jobs.query_count, id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com
-              - jobs.query_count, name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com},
-          {axisId: shreyashri@google.com - jobs.query_count, id: shreyashri@google.com
-              - jobs.query_count, name: shreyashri@google.com}], showLabels: true,
-        showValues: true, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
-        type: linear}]
     x_axis_zoom: true
     y_axis_zoom: true
-    series_colors: {}
-    show_null_points: true
-    interpolation: linear
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    series_colors:
+      jobs_timeline.total_slot_ms: "#B32F37"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
     enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Billed (GB)
-    value_format: "#.##"
-    hidden_pivots: {}
     defaults_version: 1
-    note_state: collapsed
-    note_display: hover
-    note_text: Filter on a User Email for better Visuals
+    hidden_fields: [jobs_timeline.state]
     listen:
-      User Email: jobs.user_email
-    row: 21
-    col: 13
-    width: 11
-    height: 8
-  - title: Total Number of Queries Completed
-    name: Total Number of Queries Completed
+      Date Limit: date.date_filter
+    row: 14
+    col: 8
+    width: 8
+    height: 9
+  - title: Slots Usage By Jobs Running (Top 15)
+    name: Slots Usage By Jobs Running (Top 15)
     model: bigquery_information_schema
-    explore: jobs
-    type: single_value
-    fields: [jobs.query_count]
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.total_slot_ms, jobs_timeline.state]
     filters:
-      date.date_filter: 8 days
+      jobs_timeline_job.job_id: ''
+      jobs_timeline_job.job_type: ''
+      jobs_timeline.state: RUNNING
+    sorts: [jobs_timeline.total_slot_ms desc 0]
     limit: 500
     column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    color_application:
-      collection_id: ed5756e2-1ba8-4233-97d2-d565e309c03b
-      palette_id: ff31218a-4f9d-493c-ade2-22266f5934b8
-      options:
-        steps: 5
-    single_value_title: Total Number of Queries Completed
-    value_format: ''
-    x_axis_gridlines: true
+    query_timezone: America/New_York
+    x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -515,47 +874,112 @@
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
-    x_axis_zoom: true
-    y_axis_zoom: true
     trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
+    stacking: normal
+    limit_displayed_rows: true
     legend_position: center
     point_style: none
-    series_colors: {}
-    show_value_labels: true
+    show_value_labels: false
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
-    hidden_pivots: {}
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    series_colors:
+      jobs_timeline.total_slot_ms: "#72D16D"
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     defaults_version: 1
+    hidden_fields: [jobs_timeline.state]
     listen:
-      User Email: jobs.user_email
-    row: 0
-    col: 15
-    width: 4
-    height: 3
-  - title: Jobs Count Completed
-    name: Jobs Count Completed
+      Date Limit: date.date_filter
+    row: 14
+    col: 16
+    width: 8
+    height: 9
+  - title: Elapsed run time(seconds) Jobs Completed (Top 15)
+    name: Elapsed run time(seconds) Jobs Completed (Top 15)
     model: bigquery_information_schema
-    explore: jobs
-    type: single_value
-    fields: [jobs.state, jobs.count]
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.elapsed_seconds]
     filters:
-      date.date_filter: 8 days
-      jobs.state: DONE
-    sorts: [jobs.state]
+      jobs_timeline.state: DONE
+    sorts: [jobs_timeline.elapsed_seconds desc 0]
     limit: 500
     column_limit: 50
+    query_timezone: America/New_York
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: true
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    hidden_series: []
+    series_colors:
+      jobs_timeline.elapsed_seconds: "#B32F37"
+    column_spacing_ratio: 0
     custom_color_enabled: true
     show_single_value_title: true
+    single_value_title: Total Number of Jobs running
     show_comparison: false
     comparison_type: value
     comparison_reverse_colors: false
@@ -563,8 +987,118 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Jobs completed
     hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    listen:
+      Date Limit: date.date_filter
+    row: 23
+    col: 8
+    width: 8
+    height: 10
+  - title: Elapsed Run Time (seconds) Jobs Running (Top 15)
+    name: Elapsed Run Time (seconds) Jobs Running (Top 15)
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: looker_bar
+    fields: [jobs_timeline_job.job_id, jobs_timeline.elapsed_seconds]
+    filters:
+      jobs_timeline.state: RUNNING
+    sorts: [jobs_timeline.elapsed_seconds desc 0]
+    limit: 500
+    column_limit: 50
+    query_timezone: America/New_York
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: true
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    x_axis_zoom: true
+    y_axis_zoom: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '15'
+    hidden_series: []
+    series_colors:
+      jobs_timeline.elapsed_seconds: "#72D16D"
+    column_spacing_ratio: 0
+    custom_color_enabled: true
+    show_single_value_title: true
+    single_value_title: Total Number of Jobs running
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    defaults_version: 1
+    listen:
+      Date Limit: date.date_filter
+    row: 23
+    col: 16
+    width: 8
+    height: 10
+  - title: Slot Usage during Job Timeline
+    name: Slot Usage during Job Timeline
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    type: looker_area
+    fields: [jobs_timeline.period_start_time, jobs_timeline.period_slot_ms_value]
+    filters:
+      date.date_filter: 8 days
+      jobs_timeline.job_id: ''
+    sorts: [jobs_timeline.period_start_time desc]
+    limit: 500
+    column_limit: 50
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -583,82 +1117,40 @@
     limit_displayed_rows: false
     legend_position: center
     point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    listen:
-      User Email: jobs.user_email
-    row: 0
-    col: 19
-    width: 5
-    height: 3
-  - title: Average Slot Usage by Users per Hour
-    name: Average Slot Usage by Users per Hour
-    model: bigquery_information_schema
-    explore: jobs
-    type: looker_column
-    fields: [jobs.user_email, jobs.average_slot_ms, date.__date, date.__hour]
-    pivots: [jobs.user_email]
-    filters:
-      date.date_filter: 8 days
-    sorts: [jobs.user_email, jobs.average_slot_ms desc 0]
-    limit: 500
-    column_limit: 50
-    x_axis_gridlines: true
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
     show_value_labels: true
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    ordering: none
-    show_null_labels: false
+    show_null_points: true
+    interpolation: linear
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    show_null_points: true
-    interpolation: linear
-    y_axes: [{label: Average Slot(ms), orientation: left, series: [{axisId: jobs.average_slot_ms,
-            id: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com - jobs.average_slot_ms,
-            name: shreya-sandbox-looker@shreya-sandbox.iam.gserviceaccount.com}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
     x_axis_zoom: true
     y_axis_zoom: true
+    series_colors:
+      jobs_timeline.period_slot_ms_value: "#592EC2"
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     hidden_pivots: {}
     defaults_version: 1
-    hidden_fields: [date.__date]
-    note_state: collapsed
-    note_display: hover
-    note_text: Filter on a User Email for better Visuals
     listen:
-      User Email: jobs.user_email
-    row: 3
+      "[Job ID]": jobs_timeline_job.job_id
+    row: 6
     col: 0
-    width: 24
-    height: 11
+    width: 12
+    height: 8
   filters:
   - name: Date Limit
     title: Date Limit
@@ -671,11 +1163,11 @@
       display: popover
       options: []
     model: bigquery_information_schema
-    explore: jobs
+    explore: jobs_timeline
     listens_to_filters: []
     field: date.date_filter
-  - name: User Email
-    title: User Email
+  - name: "[Job ID]"
+    title: "[Job ID]"
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -685,6 +1177,20 @@
       display: popover
       options: []
     model: bigquery_information_schema
-    explore: jobs
+    explore: jobs_timeline
     listens_to_filters: []
-    field: jobs.user_email
+    field: jobs_timeline_job.job_id
+  - name: Job Type
+    title: Job Type
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+      options: []
+    model: bigquery_information_schema
+    explore: jobs_timeline
+    listens_to_filters: []
+    field: jobs_timeline_job.job_type
