@@ -1,5 +1,5 @@
-- dashboard: bigquery_monitoring
-  title: BigQuery Monitoring
+- dashboard: bigquery_monitoring_Admin
+  title: BigQuery Monitoring Admin
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
