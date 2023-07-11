@@ -1,12 +1,12 @@
-- dashboard: bigquery_monitoring_Admin
-  title: BigQuery Monitoring Admin
+- dashboard: bigquery_monitoring
+  title: BigQuery Monitoring
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
   preferred_slug: QCPDNlDrucp88r3NdESm1U
   elements:
-  - title: BigQuery Monitoring
-    name: BigQuery Monitoring
+  - title: Total Slots ms
+    name: Total Slots ms
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -30,15 +30,15 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 13
     width: 3
     height: 2
-  - title: New Tile
-    name: New Tile
+  - title: Total Bytes Processed
+    name: Total Bytes Processed
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -61,15 +61,15 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 3
     width: 4
     height: 2
-  - title: New Tile
-    name: New Tile (2)
+  - title: Total Bytes Billed
+    name: Total Bytes Billed
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -92,15 +92,15 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 10
     width: 3
     height: 2
-  - title: New Tile
-    name: New Tile (3)
+  - title: Total Run Time
+    name: Total Run Time
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -123,15 +123,15 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 16
     width: 4
     height: 2
-  - title: New Tile
-    name: New Tile (4)
+  - title: Total Bytes Spilled
+    name: Total Bytes Spilled
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -154,15 +154,15 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 20
     width: 4
     height: 2
-  - title: New Tile
-    name: New Tile (5)
+  - title: Query Count
+    name: Query Count
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -179,21 +179,21 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Query Count
+    single_value_title: Jobs Count
     value_format: ''
     hidden_pivots: {}
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 0
     width: 3
     height: 2
-  - title: New Tile
-    name: New Tile (6)
+  - title: Query Cache Rate
+    name: Query Cache Rate
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -216,20 +216,22 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
+      "  Project": tables.table_catalog
+      State: jobs.state
     row: 1
     col: 7
     width: 3
     height: 2
-  - title: New Tile
-    name: New Tile (7)
+  - title: Running Jobs Count
+    name: Running Jobs Count
     model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
-    filters: {}
+    filters:
+      date.date_filter: 8 days
+      jobs.state: RUNNING
     sorts: [jobs.query_count desc 0]
     limit: 500
     column_limit: 50
@@ -242,7 +244,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Queries Running
+    single_value_title: Total Jobs Running
     show_view_names: false
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -276,23 +278,26 @@
     hidden_fields: []
     hidden_points_if_no: []
     Created: date.date_filter
+    note_state: expanded
+    note_display: below
+    note_text: For a duration since Creation Time
     listen:
       Creation Time: jobs.creation_time
       Job Type: jobs.job_type
-      State: jobs.state
       "  Project": tables.table_catalog
-      Date Limit: date.date_filter
     row: 3
     col: 0
     width: 8
-    height: 2
-  - title: New Tile
-    name: New Tile (8)
+    height: 4
+  - title: Pending Query Count
+    name: Pending Query Count
     model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
-    filters: {}
+    filters:
+      date.date_filter: 8 days
+      jobs.state: PENDING
     sorts: [jobs.query_count desc 0]
     limit: 500
     column_limit: 50
@@ -305,7 +310,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Queries Pending
+    single_value_title: Total Jobs Pending
     show_view_names: false
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -339,23 +344,26 @@
     hidden_fields: []
     hidden_points_if_no: []
     Created: date.date_filter
+    note_state: expanded
+    note_display: below
+    note_text: For a duration since Creation Time
     listen:
       Creation Time: jobs.creation_time
       Job Type: jobs.job_type
-      State: jobs.state
       "  Project": tables.table_catalog
-      Date Limit: date.date_filter
     row: 3
     col: 8
     width: 8
-    height: 2
-  - title: New Tile
-    name: New Tile (9)
+    height: 4
+  - title: Failed Query Count
+    name: Failed Query Count
     model: bigquery_information_schema
     explore: jobs
     type: single_value
     fields: [jobs.query_count]
-    filters: {}
+    filters:
+      date.date_filter: 8 days
+      jobs.state: FAILED
     sorts: [jobs.query_count desc 0]
     limit: 500
     column_limit: 50
@@ -368,7 +376,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Queries Failed
+    single_value_title: Total Jobs Failed
     show_view_names: false
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -402,16 +410,17 @@
     hidden_fields: []
     hidden_points_if_no: []
     Created: date.date_filter
+    note_state: expanded
+    note_display: below
+    note_text: For a duration since Creation Time
     listen:
       Creation Time: jobs.creation_time
       Job Type: jobs.job_type
-      State: jobs.state
       "  Project": tables.table_catalog
-      Date Limit: date.date_filter
     row: 3
     col: 16
     width: 8
-    height: 2
+    height: 4
   - title: Data Processed by Date
     name: Data Processed by Date
     model: bigquery_information_schema
@@ -474,10 +483,10 @@
     label_type: labPer
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 5
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 7
     col: 0
     width: 13
     height: 7
@@ -553,10 +562,10 @@
     total_color: false
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 5
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 7
     col: 13
     width: 11
     height: 7
@@ -673,10 +682,10 @@
     hidden_fields: [jobs.query_count, jobs.total_duration, jobs.total_slot_ms]
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 12
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 14
     col: 0
     width: 8
     height: 6
@@ -784,10 +793,10 @@
     hidden_fields: [jobs.query_count, jobs.total_duration]
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 12
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 14
     col: 8
     width: 8
     height: 6
@@ -899,10 +908,10 @@
     label_type: labPer
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 18
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 20
     col: 0
     width: 8
     height: 7
@@ -1012,10 +1021,10 @@
       jobs.total_processed_gib]
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 12
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 14
     col: 16
     width: 8
     height: 6
@@ -1071,10 +1080,9 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 25
+      "  Project": tables.table_catalog
+    row: 27
     col: 0
     width: 8
     height: 6
@@ -1141,10 +1149,10 @@
       jobs.creation_date: 513
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 18
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 20
     col: 8
     width: 8
     height: 7
@@ -1207,10 +1215,10 @@
     label_type: labPer
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 18
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 20
     col: 16
     width: 8
     height: 7
@@ -1223,6 +1231,7 @@
       jobs.total_slot_ms, jobs.total_processed_gib]
     filters:
       jobs.creation_time: 1 hours
+      jobs.state: FAILED
     sorts: [jobs.query_count desc 0]
     limit: 500
     column_limit: 50
@@ -1281,10 +1290,9 @@
     Created: date.date_filter
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 25
+      "  Project": tables.table_catalog
+    row: 27
     col: 8
     width: 8
     height: 6
@@ -1343,10 +1351,9 @@
     conditional_formatting_include_nulls: false
     defaults_version: 1
     listen:
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 25
+      "  Project": tables.table_catalog
+    row: 27
     col: 16
     width: 8
     height: 6
@@ -1420,23 +1427,23 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 31
+      "  Project": tables.table_catalog
+      State: jobs.state
+    row: 33
     col: 0
     width: 24
     height: 13
   - type: button
     name: button_1800
-    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_user_dashboard?Date%20Limit=8%20days&User%20Email="}'
+    rich_content_json: '{"text":"User Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/386?Date%20Limit=8%20days&User%20Email="}'
     row: 0
     col: 0
     width: 11
     height: 1
   - type: button
     name: button_1802
-    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"/dashboards/bigquery_information_schema::bigquery_monitoring_jobs_dashboard?Date%20Limit=8%20days&%5BJob%20ID%5D=&Job%20Type="}'
+    rich_content_json: '{"text":"Jobs Dashboard","description":"","newTab":true,"alignment":"center","size":"large","style":"FILLED","color":"#1A73E8","href":"https://googlecloudpso.cloud.looker.com/dashboards/388?Date+Limit=8+days&%5BJob+ID%5D=&Job+Type="}'
     row: 0
     col: 12
     width: 12
@@ -1463,10 +1470,9 @@
     defaults_version: 1
     listen:
       Job Type: jobs.job_type
-      State: jobs.state
-      "  Project": tables.table_catalog
       Date Limit: date.date_filter
-    row: 44
+      "  Project": tables.table_catalog
+    row: 46
     col: 0
     width: 24
     height: 11
@@ -1479,7 +1485,6 @@
       jobs.user_email, jobs.total_slot_ms]
     filters:
       tables.table_name: "-NULL"
-      date.date_filter: 8 days
     sorts: [jobs.user_email]
     limit: 5
     column_limit: 50
@@ -1544,11 +1549,12 @@
     label_type: labPer
     show_null_points: true
     interpolation: linear
-    listen: {}
-    row:
-    col:
-    width:
-    height:
+    listen:
+      Date Limit: date.date_filter
+    row: 57
+    col: 0
+    width: 8
+    height: 6
   - title: Top 5 Projects
     name: Top 5 Projects
     model: bigquery_information_schema
@@ -1558,7 +1564,6 @@
       jobs.project_id]
     filters:
       tables.table_name: "-NULL"
-      date.date_filter: 1 days ago for 1 days
     sorts: [jobs.total_processed_tib desc]
     limit: 5
     column_limit: 50
@@ -1591,11 +1596,12 @@
         is_active: true
     defaults_version: 1
     hidden_pivots: {}
-    listen: {}
-    row:
-    col:
-    width:
-    height:
+    listen:
+      Date Limit: date.date_filter
+    row: 57
+    col: 8
+    width: 8
+    height: 6
   - title: Top 5 Tables
     name: Top 5 Tables
     model: bigquery_information_schema
@@ -1605,7 +1611,6 @@
       jobs.total_processed_tib, jobs.average_processed_gib, jobs.average_duration]
     filters:
       tables.table_name: "-NULL"
-      date.date_filter: 1 days ago for 1 days
     sorts: [jobs.total_processed_tib desc]
     limit: 15
     column_limit: 50
@@ -1638,11 +1643,12 @@
         is_active: true
     defaults_version: 1
     hidden_pivots: {}
-    listen: {}
-    row:
-    col:
-    width:
-    height:
+    listen:
+      Date Limit: date.date_filter
+    row: 57
+    col: 16
+    width: 8
+    height: 6
   filters:
   - name: Date Limit
     title: Date Limit
@@ -1658,6 +1664,20 @@
     explore: jobs
     listens_to_filters: []
     field: date.date_filter
+  - name: Creation Time
+    title: Creation Time
+    type: field_filter
+    default_value: 1 hour
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+      options: []
+    model: bigquery_information_schema
+    explore: jobs
+    listens_to_filters: []
+    field: jobs.creation_time
   - name: "  Project"
     title: "  Project"
     type: field_filter
@@ -1678,26 +1698,12 @@
     allow_multiple_values: true
     required: false
     ui_config:
-      type: advanced
+      type: checkboxes
       display: popover
     model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []
     field: jobs.job_type
-  - name: Creation Time
-    title: Creation Time
-    type: field_filter
-    default_value: 1 hour
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: advanced
-      display: popover
-      options: []
-    model: bigquery_information_schema
-    explore: jobs
-    listens_to_filters: []
-    field: jobs.creation_time
   - name: State
     title: State
     type: field_filter
@@ -1705,8 +1711,8 @@
     allow_multiple_values: true
     required: false
     ui_config:
-      type: button_group
-      display: inline
+      type: checkboxes
+      display: popover
     model: bigquery_information_schema
     explore: jobs
     listens_to_filters: []

@@ -56,6 +56,9 @@
     ordering: none
     show_null_labels: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Filter on a User Email for better Visuals
     listen:
       Date Limit: date.date_filter
       User Email: jobs.user_email
@@ -122,6 +125,9 @@
     interpolation: linear
     hidden_pivots: {}
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Filter on a User Email for better Visuals
     listen:
       User Email: jobs.user_email
     row: 21
@@ -183,14 +189,17 @@
     defaults_version: 1
     value_labels: legend
     label_type: labPer
+    note_state: collapsed
+    note_display: hover
+    note_text: Filter on a User Email for better Visuals
     listen:
       User Email: jobs.user_email
     row: 14
     col: 13
     width: 11
     height: 7
-  - title: New Tile
-    name: New Tile
+  - title: Total Slots (ms) Usage
+    name: Total Slots (ms) Usage
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -254,8 +263,8 @@
     col: 0
     width: 5
     height: 3
-  - title: New Tile
-    name: New Tile (2)
+  - title: Total Processed (GB)
+    name: Total Processed (GB)
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -318,8 +327,8 @@
     col: 5
     width: 5
     height: 3
-  - title: New Tile
-    name: New Tile (3)
+  - title: Total Billed (GB)
+    name: Total Billed (GB)
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -453,14 +462,17 @@
     value_format: "#.##"
     hidden_pivots: {}
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Filter on a User Email for better Visuals
     listen:
       User Email: jobs.user_email
     row: 21
     col: 13
     width: 11
     height: 8
-  - title: New Tile
-    name: New Tile (4)
+  - title: Total Number of Queries Completed
+    name: Total Number of Queries Completed
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -483,7 +495,7 @@
       palette_id: ff31218a-4f9d-493c-ade2-22266f5934b8
       options:
         steps: 5
-    single_value_title: Total Number of Jobs run
+    single_value_title: Total Number of Queries Completed
     value_format: ''
     x_axis_gridlines: true
     y_axis_gridlines: true
@@ -530,8 +542,8 @@
     col: 15
     width: 4
     height: 3
-  - title: New Tile
-    name: New Tile (5)
+  - title: Jobs Count Completed
+    name: Jobs Count Completed
     model: bigquery_information_schema
     explore: jobs
     type: single_value
@@ -539,7 +551,6 @@
     filters:
       date.date_filter: 8 days
       jobs.state: DONE
-      jobs.job_type: QUERY
     sorts: [jobs.state]
     limit: 500
     column_limit: 50
@@ -639,6 +650,9 @@
     hidden_pivots: {}
     defaults_version: 1
     hidden_fields: [date.__date]
+    note_state: collapsed
+    note_display: hover
+    note_text: Filter on a User Email for better Visuals
     listen:
       User Email: jobs.user_email
     row: 3
